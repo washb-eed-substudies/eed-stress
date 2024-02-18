@@ -52,6 +52,6 @@ Xvars <- c('ln_aat1', 'ln_mpo1', 'ln_neo1',
 
 
 d <- full_data %>% select("childid","clusterid", all_of(Xvars), all_of(Yvars), all_of(Wvars)) %>% 
-  filter(!rowSums(is.na(select(., , all_of(Yvars), all_of(Xvars)))) == length(c(Xvars, Yvars)))
+  filter(!rowSums(is.na(select(.,  all_of(Yvars), all_of(Xvars)))) == length(c(Xvars, Yvars)))
 
 saveRDS(d, file=paste0(here::here(),"/final-data/wbb-eed-stress-data.RDS"))
