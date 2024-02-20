@@ -30,15 +30,17 @@ colnames(full_data)
 # Treatment arm [control or combined nutrition, water, sanitation, and handwashing intervention (N+WSH)]
 # Season of measurement 
 # Perceived parental stress
-# Recent diarrheal episode
 
 
 #check that these are correct!
 Wvars<-c("sex","birthord", "momage","momheight","momedu", 
          "hfiacat", "Nlt18","Ncomp", "watmin", "walls", 
          "floor", 'roof', "HHwealth_scaled", 
-         "life_viol_any_t3", "tr",
-         'laz_t1', 'waz_t1')
+         "cesd_sum_t2", "cesd_sum_ee_t3", "tr",  
+         'ageday_st2','ageday_st3',
+         'month_st2','month_st3',
+         'monsoon_st2','monsoon_st3')
+
 
 Yvars <- c("t2_f2_8ip","t2_f2_23d","t2_f2_VI", "t2_f2_12i",
            "t3_map","t3_hr_mean",
@@ -46,7 +48,7 @@ Yvars <- c("t2_f2_8ip","t2_f2_23d","t2_f2_VI", "t2_f2_12i",
            "t3_gcr_mean","t3_gcr_cpg12","t3_saa_slope","t3_cort_slope","t3_residual_saa","t3_residual_cort")
 
 Xvars <- c('ln_aat1', 'ln_mpo1', 'ln_neo1', 
-           'ln_L_conc_t1', 'ln_M_conc_t1',
+           'ln_L_conc_t1', 'ln_M_conc_t1', 'ln_reg2',
            'ln_aat2', 'ln_mpo2', 'ln_neo2', 
            'ln_L_conc_t2', 'ln_M_conc_t2')   
 
