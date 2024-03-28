@@ -4,14 +4,14 @@ source(here::here("0-config.R"))
 
 d <- readRDS(file=paste0(here::here(),"/final-data/wbb-eed-stress-data.RDS"))
 
-#NOTE! Question: is it only conncurent analyses or do I do 14mo X -> 28mo Y too?
+#NOTE! Just do concurrent analyses
 
 
 Yvars_14 <- c("t2_f2_8ip","t2_f2_23d","t2_f2_VI", "t2_f2_12i")
 
 Yvars_28 <- c("t3_map","t3_hr_mean",
-           "t3_saa_z01","t3_saa_z02","t3_cort_z01","t3_cort_z03",
-           "t3_gcr_mean","t3_gcr_cpg12","t3_saa_slope","t3_cort_slope","t3_residual_saa","t3_residual_cort")
+              #"t3_saa_z01","t3_saa_z02","t3_cort_z01","t3_cort_z03", #just look at slope and residuals
+              "t3_gcr_mean","t3_gcr_cpg12","t3_saa_slope","t3_cort_slope","t3_residual_saa","t3_residual_cort")
 
 
 Xvars_14 <- c('ln_aat1', 'ln_mpo1', 'ln_neo1', 
@@ -64,4 +64,5 @@ full_res <- full_res %>% group_by(time) %>%
 
 #Save results
 saveRDS(full_res, here("results/unadjusted/unadjusted_res.RDS"))
+write.csv(full_res, here("results/unadjusted/unadjusted_res.csv"))
 

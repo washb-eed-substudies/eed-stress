@@ -1,0 +1,129 @@
+---
+title: "EED-Stress results"
+author: "Andrew Mertens"
+date: "2024-03-24"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+
+library(tidyverse)
+library(knitr)
+library(DT)
+
+forest_plots <- readRDS(paste0(here::here(),"/figure-data/forest_plots.rds"))
+heatmaps <- readRDS(paste0(here::here(),"/figure-data/heatmaps.rds"))
+tables <- readRDS(paste0(here::here(),"/tables/results-table-objects.rds"))
+
+
+
+d <- readRDS(file=paste0(here::here(),"/results/adjusted/adjusted_res.RDS"))
+
+d14 <- d %>% filter(time=='14 months')
+d28 <- d %>% filter(time=='28 months')
+
+```
+
+## Results interpretations
+
+Nothing is significant after correcting for multiple comparisons, so weak to no association between EED and stress outcome
+
+Looks like Alpha-1 antitrypsan has the strongest associations with stress - specifically cortisol and salivary amalyase, but in opposite directions. I think cortisol and amalyase should both increase with stress, so interesting and hard to interpret finding. Ask Audrie, but could be random chance.
+
+
+## Figures
+
+### Consort figure
+
+(to add)
+
+### Heatmaps - adjusted analyses
+
+Primary figures
+To do: scale point estimates, and add figure legends
+
+### Figure 1 -Heatmap of adjusted association's direction and significance for year 1 measurements
+
+Cells are colored by the direction and P-value significance for each EED exposure and stress outcome combination. Printed in each cell is the  point estimate from adjusted regression models. Each row is a specific stress outcome and each column is an EED exposure.
+
+```{r, echo=FALSE}
+
+heatmaps$p_heatmap14
+
+```
+
+### Figure 2 -Heatmap of adjusted association's direction and significance for year 2 measurements
+
+Cells are colored by the direction and P-value significance for each EED exposure and stress outcome combination. Printed in each cell is the  point estimate from adjusted regression models. Each row is a specific stress outcome and each column is an EED exposure.
+
+
+```{r, echo=FALSE}
+
+heatmaps$p_heatmap28
+
+```
+
+
+### Heatmaps - unadjusted analyses
+
+-supplimentary figures
+
+```{r, echo=FALSE}
+
+heatmaps$p_heatmap14_unadj
+heatmaps$p_heatmap28_unadj
+
+```
+
+
+
+### Forest plots
+
+(adjusted results only)
+To do: format labels
+```{r, echo=FALSE}
+
+forest_plots$p_14mo
+forest_plots$p_28mo
+```
+
+### Spline plots
+
+Supplementary plots: to add for key significant relationships
+
+
+## Tables
+
+-Note I'm splitting the tables by domain of stress outcome (consistent with prior stress papers from this study)
+
+### EED biomarker adjusted associations with year-1 oxidative stress measures
+
+Biomarkers measured at child age 14 months
+
+```{r, echo=FALSE}
+
+#DT::datatable(d14, options = list(autoWidth = TRUE))
+
+knitr::kable(tables$tab_ox_stress)
+
+```
+
+### EED biomarker adjusted associations with year-2 sympathetic adrenomedullary axis measures
+
+```{r, echo=FALSE}
+
+knitr::kable(tables$tab_spa)
+
+```
+
+### EED biomarker adjusted associations with year-2 hypothalamic-pituitary-adrenal axis measures
+
+
+```{r, echo=FALSE}
+
+knitr::kable(tables$tab_hpa)
+
+```
