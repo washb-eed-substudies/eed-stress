@@ -12,9 +12,8 @@ filtering <- function(row){
 }
 
 # EED GUT BIOMARKERS UNCOMMENT AND FILL IN THIS CODE (UNCOMMENT WITH CTRL+SHIFT+C ON PC)
-exp <- c("neopterin", "lactulose", "mannitol", "AAT", "myeloperoxidase", "REGB1") 
-out <- c("AA", "iPF(2a)-VI", "iPF(2a)-III", "8,12-iso-iPF(2a)-VI", 
-         "2,3-dinor-iPF(2a)-III") 
+exp <- c("ln_neo1", "ln_neo2", "ln_L_conc_t1", "ln_L_conc_t2", "ln_M_conc_t1", "ln_M_conc_t2","ln_aat1","ln_aat2","ln_mpo1","ln_mpo2","ln_reg2") 
+out <- c("t3_saa_z01", "t3_saa_z02", "t2_f2_8ip", "t2_f2_23d","t2_f2_VI","t2_f2_12i","t3_map","t3_hr_mean","t3_cort_z01","t3_cort_z03","t3_gcr_mean","t3_gcr_cpg12") 
 d1 <- d[apply(select(d, all_of(exp)), 1, filtering),] # only has rows where we have exposure data for the mom
 d1 <- d1[apply(select(d1, all_of(out)), 1, filtering),] # only has rows where we have both some exposure data and some outcome data (all kids included in analyses)
 
