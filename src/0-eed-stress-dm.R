@@ -53,7 +53,16 @@ Xvars <- c('ln_aat1', 'ln_mpo1', 'ln_neo1',
            'ln_L_conc_t2', 'ln_M_conc_t2')   
 
 
-d <- full_data %>% select("childid","clusterid", all_of(Xvars), all_of(Yvars), all_of(Wvars)) %>% 
+#for table1
+demo_vars <- c('elec','asset_radio','asset_refrig',
+           'asset_bike','asset_moto','asset_sewmach','asset_tv',
+           'asset_wardrobe','asset_table','asset_chair','asset_clock',
+           'asset_khat','asset_chouki','asset_mobile','n_cattle',
+           'n_goat','n_chicken')
+
+
+
+d <- full_data %>% select("childid","dataid","clusterid", all_of(Xvars), all_of(Yvars), all_of(Wvars), all_of(demo_vars)) %>% 
   filter(!rowSums(is.na(select(.,  all_of(Yvars), all_of(Xvars)))) == length(c(Xvars, Yvars)))
 
 saveRDS(d, file=paste0(here::here(),"/final-data/wbb-eed-stress-data.RDS"))
