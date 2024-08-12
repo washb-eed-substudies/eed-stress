@@ -19,6 +19,7 @@ d1 <- d[apply(select(d, all_of(exp)), 1, filtering),] # only has rows where we h
 d1 <- d1[apply(select(d1, all_of(out)), 1, filtering),] # only has rows where we have both some exposure data and some outcome data (all kids included in analyses)
 
 m <- d1 %>% distinct(dataid, .keep_all = T)
+table(d$momedu)
 
 nperc <- function(vector){
   n <- sum(vector==1, na.rm=T)
@@ -30,7 +31,21 @@ mediqr <- function(vector){
   paste(quantiles[3], " (", quantiles[2], ", ", quantiles[4], ")", sep="")
 }
 
-vars <- c('sex', 'birthord','momage','momheight','momedu',
+vector=m$n_goat
+
+mediqr(m$n_goat)
+
+
+m$hfiacat_ind <- factor(ifelse(m$hfiacat=="Food Secure", 0, 1))
+
+#recode education
+table(m$momedu)
+m$momedu_bin <- factor(ifelse(m$momedu=="Secondary (>5y)", "1", "0"))
+
+table(m$n_goat)
+class(m$n_goat)
+
+vars <- c('sex', 'birthord','momage','momheight','momedu_bin',
           'Ncomp','Nlt18','watmin',
            'elec','floor','asset_radio','asset_refrig',
            'asset_bike','asset_moto','asset_sewmach','asset_tv',
@@ -40,7 +55,6 @@ vars <- c('sex', 'birthord','momage','momheight','momedu',
 
 
 
-m$hfiacat_ind <- factor(ifelse(m$hfiacat=="Food Secure", 0, 1))
 
 n_med_col <- NULL
 for (var in c(vars)) {
@@ -59,7 +73,7 @@ for (var in c(vars)) {
 }
 
 
-tbl1 <- data.frame(var=vars, Variable= c('Sex', 'Birth order','Maternal age','Maternal height','Maternal education',
+tbl1 <- data.frame(var=vars, Variable= c('Sex', 'Birth order','Maternal age','Maternal height','Mom has at least secondary education',
                                  'Number in compound','Number under 18 in compound','Distance to water source',
                                  'Electricity','Improved floor','Owns radio','Owns refrigerator',
                                  'Owns bike','Owns motorcycle','Owns sewing machine','Owns tv',
