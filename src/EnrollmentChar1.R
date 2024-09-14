@@ -8,6 +8,10 @@ library(officer)
 #d <- readRDS("~/Desktop/EED-Stress/final-data/wbb-eed-stress-data.RDS")
 d <- readRDS(file=paste0(here::here(),"/final-data/wbb-eed-stress-data.RDS"))
 
+head(d)
+
+
+
 filtering <- function(row){
   any(!is.na(row))
 }
@@ -102,4 +106,35 @@ sect_properties <- prop_section(
 save_as_docx("Table 1" = tbl1flex, path="tables/stress-eed-enrollment.docx", 
              pr_section = sect_properties) 
 
+
+#From Lexie:
+
+df <- tibble(
+  Type = c("Exposure","Exposure", "Exposure", "Exposure", "Exposure", "Exposure", 
+           "Exposure","Exposure","Exposure", "Exposure","Exposure", "Outcome", 
+           "Outcome", "Outcome", "Outcome", "Outcome", "Outcome", "Outcome", "Outcome", 
+           "Outcome","Outcome","Outcome"),
+  Biomarker = c("Alpha-1-antitrypsin","Alpha-1-antitrypsin","Lactulose","Lactulose",
+                "Mannitol","Mannitol","Myeloperoxidase","Myeloperoxidase","Neopterin","Neopterin",
+                "REGB1",
+                "Alpha-amylase","Alpha-amylase","Cortisol","Cortisol","F2_8IP","F2_23D",
+                "F2_VI","F2_12i","GCR Methyl","HR","MAP"),
+  Timepoint = c("3 mo.", "14 mo.","3 mo.", "14 mo.","3 mo.", "14 mo.","3 mo.", "14 mo.","3 mo.", "14 mo.","14 mo.",
+                "28 mo.", "28 mo.", "28 mo.", "28 mo.","14 mo.", "14 mo.","14 mo.", "14 mo.","14 mo.","28 mo.","28 mo."),
+  Median = c(10, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 6, 7, 8, 8, 9, 22)
+)
+
+#pivot wide, with columns as  timepoints, and values from the median column
+df %>% 
+  pivot_wider(names_from = c(Timepoint), values_from = Median)
+
+
+wide_df <- df %>%
+  pivot_wider(names_from = Biomarker, values_from = Timepoint)
+  #pivot_wider(names_from = Biomarker, values_from = Timepoint, values_fill = list(Timepoint = 0))
+print(wide_df)
+summary_df <- df %>%
+  group_by(Type, Biomarker) %>%
+  summarize(Total_Value = sum(Value), .groups = 'drop')
+print(summary_df)
 
