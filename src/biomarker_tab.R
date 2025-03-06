@@ -25,9 +25,9 @@ Xvars_28 <- c('ln_aat2', 'ln_mpo2', 'ln_neo2',
 
 #fix above table code to calculate the interquartile range:
 tab <- d %>% 
-  select(all_of(c("childid", "dataid", "clusterid", Xvars_14, Yvars_14))) %>% 
+  select(all_of(c("childid", "dataid", "clusterid", Xvars_14, Xvars_28,Yvars_14,Yvars_28))) %>% 
   gather(key="biomarker", value="value", -c("childid", "dataid", "clusterid")) %>% 
-  mutate(biomarker = factor(biomarker, levels=c(Xvars_14, Yvars_14))) %>% 
+  mutate(biomarker = factor(biomarker, levels=c(Xvars_14, Yvars_14, Xvars_28, Yvars_28))) %>% 
   group_by(biomarker) %>% 
   summarise(mean=mean(value, na.rm=TRUE), 
             q1=quantile(value, 0.25, na.rm=TRUE), 
