@@ -7,6 +7,9 @@ library(officer)
 
 #d <- readRDS("~/Desktop/EED-Stress/final-data/wbb-eed-stress-data.RDS")
 d <- readRDS(file=paste0(here::here(),"/final-data/wbb-eed-stress-data.RDS"))
+d$ageday_st2 <- d$ageday_st2/30.4167
+d$ageday_st3 <- d$ageday_st3/30.4167
+#add child age 
 
 head(d)
 
@@ -49,7 +52,7 @@ m$momedu_bin <- factor(ifelse(m$momedu=="Secondary (>5y)", "1", "0"))
 table(m$n_goat)
 class(m$n_goat)
 
-vars <- c('sex', 'birthord','momage','momheight','momedu_bin',
+vars <- c('sex', 'birthord',"ageday_st2","ageday_st3",'momage','momheight','momedu_bin',
           'Ncomp','Nlt18','watmin',
            'elec','floor','asset_radio','asset_refrig',
            'asset_bike','asset_moto','asset_sewmach','asset_tv',
@@ -77,7 +80,7 @@ for (var in c(vars)) {
 }
 
 
-tbl1 <- data.frame(var=vars, Variable= c('Sex', 'Birth order','Maternal age','Maternal height','Mom has at least secondary education',
+tbl1 <- data.frame(var=vars, Variable= c('Sex', 'Birth order','Child age- 14 month visit','Child age- 28 month visit','Maternal age','Maternal height','Mom has at least secondary education',
                                  'Number in compound','Number under 18 in compound','Distance to water source',
                                  'Electricity','Improved floor','Owns radio','Owns refrigerator',
                                  'Owns bike','Owns motorcycle','Owns sewing machine','Owns tv',
